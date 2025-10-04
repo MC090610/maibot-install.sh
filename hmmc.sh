@@ -42,6 +42,8 @@ install_linux() {
         return 1
     fi
     
+    echo "更换软件源"
+    bash <(curl -sSL https://linuxmirrors.cn/main.sh)
     echo "更新软件包"
     apt update
     
@@ -112,12 +114,9 @@ login_and_copy_script() {
     echo -e "${YELLOW}已将脚本复制到共享目录${NC}"
     echo "现在登录Ubuntu环境..."
     echo "在Ubuntu中，请执行以下命令："
-    echo "1. cd /tmp"
-    echo "2. cp /termux/home/\$USER/shared_folder/$SCRIPT_NAME ."
+    echo "2. curl -O https://raw.githubusercontent.com/MC090610/maibot-install.sh/main/hmmc.sh"
     echo "3. chmod +x $SCRIPT_NAME"
     echo "4. ./$SCRIPT_NAME"
-    echo ""
-    echo "输入 exit 可以退出 Ubuntu 环境"
     echo ""
     
     # 登录Ubuntu

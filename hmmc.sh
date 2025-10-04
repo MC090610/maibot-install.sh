@@ -55,30 +55,29 @@ install_linux() {
     git clone https://github.com/MaiM-with-u/MaiBot.git
     git clone https://github.com/MaiM-with-u/MaiBot-Napcat-Adapter.git
     
-    echo "安装uv"
-    # 使用 pip 安装 uv
-    pip3 install uv --break-system-packages -i https://mirrors.huaweicloud.com/repository/pypi/simple/
-     grep -qF 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-     echo"安装主体依赖"
-     cd MaiBot
-     uv venv
-     uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-     
-    echo"安装框架依赖"
+    echo "配置环境"
+    python3 -m venv MaiBot/venv      # 创建虚拟环境     
+    source MaiBot/venv/bin/activate  # 激活环境
+    
+    echo "安装本体依赖"
+    cd MaiBot
+    pip3 install -r requirements.txt
+    
+    echo "安装框架依赖"
     cd ..
     cd MaiBot-Napcat-Adapter
     pip3 install -r requirements.txt
-    # 复制并重命名配置文件
     cp template/template_config.toml config.toml
-    echo "部署nc框架"
-    # 安装NapCat
-    curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh
-    sudo bash napcat.sh --docker n --cli y
     
-    echo "启动nc"
+    echo "安装nc框架"
+    # 安装NapCat
+    curl -o napcat.sh https://nclatest.znin.net/ NapNeko/NapCat-Installer/main/script/install.sh
+    sudo bash napcat.sh --docker n --cli y
+# 打开NapCat
     sudo napcat
-   
+    
+    
+    
     echo -e "${GREEN}Linux 环境安装完成！${NC}"
     echo "请根据README文件进行后续配置"
 }

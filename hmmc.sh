@@ -43,8 +43,7 @@ install_linux() {
     fi
     
     echo "更换软件源"
-    curl -sSL https://linuxmirrors.cn/main.sh
-    sh main.sh
+    bash <(curl -sSL https://linuxmirrors.cn/main.sh)
    
     echo "更新软件包"
     apt update
@@ -58,6 +57,16 @@ install_linux() {
     cd maimai
     git clone https://github.com/MaiM-with-u/MaiBot.git
     git clone https://github.com/MaiM-with-u/MaiBot-Napcat-Adapter.git
+    
+    echo "安装uv"
+    # 使用 pip 安装 uv
+    pip3 install uv --break-system-packages -i https://mirrors.huaweicloud.com/repository/pypi/simple/
+     grep -qF 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+     echo"安装主体依赖"
+     cd MaiBot
+     uv venv
+     uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
     
     echo -e "${GREEN}Linux 环境安装完成！${NC}"
     echo "请根据README文件进行后续配置"

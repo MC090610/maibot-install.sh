@@ -41,9 +41,6 @@ install_linux() {
         echo -e "${RED}错误：当前不在 Linux 环境中！${NC}"
         return 1
     fi
-    
-    echo "更换软件源"
-    bash <(curl -sSL https://linuxmirrors.cn/main.sh)
    
     echo "更新软件包"
     apt update
@@ -67,7 +64,21 @@ source ~/.bashrc
      cd MaiBot
      uv venv
      uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
+     
+    echo"安装框架依赖"
+    cd ..
+    cd MaiBot-Napcat-Adapter
+    pip3 install -r requirements.txt
+    # 复制并重命名配置文件
+    cp template/template_config.toml config.toml
+    echo "部署nc框架"
+    # 安装NapCat
+    curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh
+    sudo bash napcat.sh --docker n --cli y
     
+    echo "启动nc"
+    sudo napcat
+   
     echo -e "${GREEN}Linux 环境安装完成！${NC}"
     echo "请根据README文件进行后续配置"
 }

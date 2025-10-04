@@ -44,6 +44,7 @@ install_linux() {
     
     echo "更换软件源"
     bash <(curl -sSL https://linuxmirrors.cn/main.sh)
+   
     echo "更新软件包"
     apt update
     

@@ -43,7 +43,8 @@ install_linux() {
     fi
     
     echo "更换软件源"
-    bash <(curl -sSL https://linuxmirrors.cn/main.sh)
+    curl -sSL https://linuxmirrors.cn/main.sh
+    sh main.sh
    
     echo "更新软件包"
     apt update
